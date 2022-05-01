@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SKU GEN</title>
+  </head>
+  <body>
+    <main></main>
+    <script>
+      const data = {
+        bst: [
+          {
+            name: "100 Day Transformation",
+            sku: "100DT",
+          },
+        ],
+        type: [
+          {
+            name: "Quần Short",
+            sku: "QS",
+          },
+          {
+            name: "Quần Dài",
+            sku: "QD",
+          },
+          {
+            name: "Áo Thun",
+            sku: "AT",
+          },
+          {
+            name: "Top Tank",
+            sku: "TT",
+          },
+        ],
+        color: [
+          {
+            name: "Trắng",
+            sku: "W",
+          },
+          {
+            name: "Đen",
+            sku: "D",
+          },
+          {
+            name: "NAVY",
+            sku: "N",
+          },
+          {
+            name: "Xám",
+            sku: "G",
+          },
+        ],
+        size: [
+          {
+            name: "M",
+            sku: "0M",
+          },
+          {
+            name: "L",
+            sku: "0L",
+          },
+          {
+            name: "XL",
+            sku: "XL",
+          },
+        ],
+        code: [
+          {
+            name: "01",
+            sku: "01",
+          },
+          {
+            name: "02",
+            sku: "02",
+          },
+          {
+            name: "03",
+            sku: "03",
+          },
+        ],
+      };
+
+      const main = document.querySelector("main");
+      const input = document.createElement("input");
+      const button = document.createElement("button");
+      button.textContent = "Copy";
+      const selectList = {};
+      Object.entries(data).forEach(([key, value]) => {
+        const select = document.createElement("select");
+        select.id = key;
+        selectList[key] = select;
+
+        value.forEach((option) => {
+          let isF = false;
+          const optionElement = document.createElement("option");
+          optionElement.value = option.sku;
+          optionElement.innerText = option.name;
+          if (!isF) {
+            optionElement.selected = true;
+            isF = true;
+          }
+          select.appendChild(optionElement);
+        });
+
+        main.appendChild(select);
+      });
+      main.appendChild(input);
+      main.appendChild(button);
+      input.value =
+        selectList.bst.value +
+        selectList.type.value +
+        selectList.size.value +
+        selectList.color.value +
+        selectList.code.value;
+      Object.entries(selectList).forEach((key, value) => {
+        key[1].addEventListener("change", (e) => {
+          input.value =
+            selectList.bst.value +
+            selectList.type.value +
+            selectList.size.value +
+            selectList.color.value +
+            selectList.code.value;
+        });
+      });
+      button.addEventListener("click", () => {
+        input.select();
+        document.execCommand("copy");
+      });
+    </script>
+  </body>
+</html>
