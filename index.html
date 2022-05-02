@@ -274,6 +274,40 @@
         selectList.code.value;
       Object.entries(selectList).forEach((key, value) => {
         key[1].addEventListener("change", (e) => {
+          const mix = ["size", "color"];
+
+          const mixSelect = {};
+          content.innerHTML = "";
+
+          data[mix[0]].forEach((item) => {
+            data[mix[1]].forEach((item_) => {
+              const div = document.createElement("div");
+              div.classList.add("box");
+              const input = document.createElement("input");
+              const label = document.createElement("label");
+              const button = document.createElement("div");
+              button.classList.add("button-co");
+
+              button.textContent = "Copy";
+              input.value =
+                selectList.bst.value +
+                selectList.type.value +
+                item.sku +
+                item_.sku +
+                selectList.code.value;
+              button.addEventListener("click", () => {
+                input.select();
+                document.execCommand("copy");
+              });
+
+              label.innerText = item.name + " - " + item_.name;
+              div.appendChild(label);
+              div.appendChild(input);
+              div.appendChild(button);
+              content.appendChild(div);
+            });
+          });
+
           input.value =
             selectList.bst.value +
             selectList.type.value +
@@ -285,39 +319,6 @@
       button.addEventListener("click", () => {
         input.select();
         document.execCommand("copy");
-      });
-
-      const mix = ["size", "color"];
-
-      const mixSelect = {};
-
-      data[mix[0]].forEach((item) => {
-        data[mix[1]].forEach((item_) => {
-          const div = document.createElement("div");
-          div.classList.add("box");
-          const input = document.createElement("input");
-          const label = document.createElement("label");
-          const button = document.createElement("div");
-          button.classList.add("button-co");
-
-          button.textContent = "Copy";
-          input.value =
-            selectList.bst.value +
-            selectList.type.value +
-            item.sku +
-            item_.sku +
-            selectList.code.value;
-          button.addEventListener("click", () => {
-            input.select();
-            document.execCommand("copy");
-          });
-
-          label.innerText = item.name + " - " + item_.name;
-          div.appendChild(label);
-          div.appendChild(input);
-          div.appendChild(button);
-          content.appendChild(div);
-        });
       });
     </script>
   </body>
