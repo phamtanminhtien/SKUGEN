@@ -13,12 +13,30 @@
         color: #333;
         background-color: #fff;
 
-        max-width: 1000px;
+        width: 100vw;
+        height: 100vh;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
       }
       main {
         display: flex;
         flex-direction: column;
         gap: 10px;
+        width: 30%;
+      }
+      .content {
+        width: 30%;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        max-height: 100%;
+
+        border: 1px solid #ccc;
       }
       select {
         width: 100%;
@@ -40,7 +58,6 @@
         transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
       }
       input {
-        width: 100%;
         height: 30px;
         border: 1px solid #ccc;
         border-radius: 4px;
@@ -106,7 +123,33 @@
       .button-63:hover {
         outline: 0;
       }
-
+      .button-co {
+      }
+      .box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
+      .box label {
+        width: 20%;
+      }
+      .box input {
+        flex: 1;
+      }
+      .box div {
+        background: #000;
+        color: #fff;
+        border-radius: 10px;
+        padding: 5px 10px;
+        font-size: 16px;
+        font-weight: 400;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+      }
+      .box div:hover {
+        transform: scale(1.1);
+      }
       @media (min-width: 768px) {
         button {
           font-size: 24px;
@@ -117,6 +160,7 @@
   </head>
   <body>
     <main></main>
+    <div class="content"></div>
     <script>
       const data = {
         bst: [
@@ -192,8 +236,13 @@
       };
 
       const main = document.querySelector("main");
+
       const input = document.createElement("input");
+
       const button = document.createElement("button");
+
+      const content = document.querySelector(".content");
+
       button.textContent = "Copy";
       const selectList = {};
       Object.entries(data).forEach(([key, value]) => {
@@ -236,6 +285,39 @@
       button.addEventListener("click", () => {
         input.select();
         document.execCommand("copy");
+      });
+
+      const mix = ["size", "color"];
+
+      const mixSelect = {};
+
+      data[mix[0]].forEach((item) => {
+        data[mix[1]].forEach((item_) => {
+          const div = document.createElement("div");
+          div.classList.add("box");
+          const input = document.createElement("input");
+          const label = document.createElement("label");
+          const button = document.createElement("div");
+          button.classList.add("button-co");
+
+          button.textContent = "Copy";
+          input.value =
+            selectList.bst.value +
+            selectList.type.value +
+            item.sku +
+            item_.sku +
+            selectList.code.value;
+          button.addEventListener("click", () => {
+            input.select();
+            document.execCommand("copy");
+          });
+
+          label.innerText = item.name + " - " + item_.name;
+          div.appendChild(label);
+          div.appendChild(input);
+          div.appendChild(button);
+          content.appendChild(div);
+        });
       });
     </script>
   </body>
